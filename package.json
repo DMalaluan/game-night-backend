@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/cucumber-js --exit --fail-fast",
     "pretest": "./node_modules/.bin/eslint . --fix",
-    "start": "node ./index.js"
+    "start": "node --trace-warnings ./index.js"
   },
   "author": "",
   "license": "ISC",

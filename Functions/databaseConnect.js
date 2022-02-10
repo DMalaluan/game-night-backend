@@ -6,18 +6,23 @@ const env = require('./env.js');
 const mongoConnectString = env.mongoUrl;
 
 function connect() {
+  //console.log(mongoConnectString)
   mongoose.connect(mongoConnectString);
   const mongoDB = mongoose.connection;
 
   mongoDB.on('error', (err) => {
     console.error(`MongoDB error: \n${err}`);
-    if (mongoDB.readyState === 2) {
-      console.log('Connected to MongoDB!');
-      return true;
-    }
     console.log(mongoDB.readyState); // log for connection status
     throw (new Error('Not connected to MongoDB'));
   });
+  if (mongoDB.readyState === 2) {
+    mongoDB.once('connected', () => {
+      console.log('Connected to MongoDB!');
+      return true;
+    });
+  } else {
+    throw (new Error('Not connected to MongoDB'));
+  }
 }
 
 function closeConnection() {
