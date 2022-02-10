@@ -4,7 +4,7 @@ Game night is a mobile application that will allow users to create and join othe
 
 ### Prepare the environment
 
-In your Terminal or COmman Prompt, run the following at the root of the poject directory:
+In your Terminal or Command Prompt, run the following at the root of the project directory:
 
 ```
 $ npm i --save
