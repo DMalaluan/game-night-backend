@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const env = require('./env.js');
 
-//const mongoConnectString = "mongodb+srv://admin:admin@cluster.iflcq.azure.mongodb.net/node?retryWrites=true&w=majority";
+// const mongoConnectString = "mongodb+srv://admin:admin@cluster.iflcq.azure.mongodb.net/node?retryWrites=true&w=majority";
 const mongoConnectString = env.mongoUrl;
 
 function connect() {
@@ -11,14 +11,13 @@ function connect() {
 
   mongoDB.on('error', (err) => {
     console.error(`MongoDB error: \n${err}`);
-  if (mongoDB.readyState === 2) {
+    if (mongoDB.readyState === 2) {
       console.log('Connected to MongoDB!');
       return true;
-  } else {
-    console.log(mongoDB.readyState) //log for connection status
+    }
+    console.log(mongoDB.readyState); // log for connection status
     throw (new Error('Not connected to MongoDB'));
-  }
-});
+  });
 }
 
 function closeConnection() {
@@ -27,8 +26,8 @@ function closeConnection() {
     mongoDB.close();
 
     mongoDB.on('error', (err) => {
-    console.log(mongoDB.readyState) //log for connection status
-    throw (new Error('Unable to disconnect from MongoDB'));
+      console.log(mongoDB.readyState); // log for connection status
+      throw (new Error('Unable to disconnect from MongoDB'));
     });
   }
 }
