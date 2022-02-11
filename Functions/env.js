@@ -5,6 +5,9 @@ const env = {
   mongoUrl: process.env.MONGO_URL,
   token: process.env.TOKEN,
   sessionSecret: process.env.SESSION_SECRET,
+  certFullChainPath: process.env.CERT_FULL_CHAIN_PATH,
+  certPrivateKeyPath: process.env.CERT_PRIVATE_KEY_PATH,
+  env: process.env.ENV,
 };
 
 for (const key in env) {

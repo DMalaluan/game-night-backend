@@ -90,7 +90,7 @@ router.get('/whoami', (req, res) => {
 router.get('/', (req, res) => {
   //console.log(req.session)
   if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
-    res.send(`Logged in as: ${req.session.user.username}\nThis is not the front page of the internet.`);
+    res.send(`Logged in as: ${req.session.user.username}`);
   } else {
     res.send('Currently not logged in');
   }
