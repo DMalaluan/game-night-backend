@@ -15,17 +15,23 @@ router.post('/signup', (req, res) => {
           password: bcrypt.generate(req.body.password),
           state: req.body.state,
           city: req.body.city,
-          birthday: new Date(req.body.birthday),
+          birthday: new Date(req.body.birthday), //Need to format to date not string
           email: req.body.email,
+          favGame: req.body.favGame,
         }).save().then((newAccount) => {
           req.session.username = req.body.username;
           res.status(201).json({
             status: 201,
             message: 'Account created successfully',
-            user: { // Check for necessity ID and cakeDay
+            user: { // Send message back w info
               username: req.body.username,
               id: newAccount.id,
-              birthday: req.body.birthday,
+              birthday: req.body.birthday, //Need to format to date not string
+              //birthday: Date(req.body.birthday), 
+              state: req.body.state,
+              city: req.body.city,
+              email: req.body.email,
+              favGame: req.body.favGame,
             },
           });
         }).catch((err) => {

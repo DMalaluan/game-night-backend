@@ -27,6 +27,29 @@ const signupSchema = {
       maxLength: 40,
       pattern: '((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#!$%]).{8,40})',
     },
+    state: {          
+      type: 'string',
+      minLength: 1,
+    },
+    city: {
+      type: 'string',
+      minLength: 1,
+    },
+    email: {
+      type: 'string',
+      minLength: 1,
+    },
+    birthday: { //Need to format to date not string
+      type: 'string',
+      minLength: 1,
+      /*type: 'date',
+      min: '0000-00-00',
+      max: '9999-99-99'*/
+    },
+    favGame: {
+      type: 'string',
+      minLength: 1,
+    },
     additionalProperties: false,
   },
 };
@@ -63,10 +86,13 @@ const userSchema = { // need to edit
     city: {
       type: 'string',
     },
-    birthday: { // check if this is right.
+    email: {
+      type: 'string',
+    },
+    birthday: { // check if this is right. //Need to format to date not string
       type: 'date',
     },
-    email: {
+    favGame: {
       type: 'string',
     },
   },
