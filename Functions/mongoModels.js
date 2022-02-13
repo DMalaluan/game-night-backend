@@ -8,7 +8,7 @@ const usersSchema = mongoose.Schema({
   city: String,
   birthday: Date,
   email: String,
-
+  favGame: String,
 });
 
 module.exports = {
