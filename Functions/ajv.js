@@ -77,9 +77,9 @@ const userSchema = { // need to edit
     username: {
       type: 'string',
     },
-    password: {
+    /*password: {
       type: 'string',
-    },
+    },*/ //In case we ever want to see password(encrypted)
     state: {
       type: 'string',
     },
