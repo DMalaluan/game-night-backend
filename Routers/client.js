@@ -4,6 +4,7 @@ const { v4: uuid } = require('uuid');
 const { ajv, bcrypt, models } = require('../Functions');
 
 router.post('/signup', (req, res) => {
+  console.log("Gibberish")
   const valid = ajv.validateSignup(req.body);
   if (valid === null) {
     models.users.findOne({
