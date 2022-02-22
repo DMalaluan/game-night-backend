@@ -16,7 +16,7 @@ router.post('/signup', (req, res) => {
           password: bcrypt.generate(req.body.password),
           state: req.body.state,
           city: req.body.city,
-          birthday: new Date(Date.parse(req.body.birthday)), //Need to format to date not string
+          //birthday: new Date(Date.parse(req.body.birthday)), //Need to format to date not string
           email: req.body.email,
           favGame: req.body.favGame,
         }).save().then((newAccount) => {
@@ -28,7 +28,7 @@ router.post('/signup', (req, res) => {
               username: req.body.username,
               id: newAccount.id,
               //birthday: req.body.birthday, //Need to format to date not string
-              birthday: new Date(Date.parse(req.body.birthday)), 
+              //birthday: new Date(Date.parse(req.body.birthday)), 
               state: req.body.state,
               city: req.body.city,
               email: req.body.email,
