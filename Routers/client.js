@@ -4,7 +4,7 @@ const { v4: uuid } = require('uuid');
 const { ajv, bcrypt, models } = require('../Functions');
 
 router.post('/signup', (req, res) => {
-  console.log("Gibberish")
+  //console.log("Gibberish")
   const valid = ajv.validateSignup(req.body);
   if (valid === null) {
     models.users.findOne({
@@ -84,6 +84,62 @@ router.post('/login', (req, res) => {
     res.status(403).send({ status: 403, message: 'Invalid request body', reason: valid });
   }
   //console.log('tempLogNumber1');
+});
+
+router.post('/createEvent', (req, res) => {
+  //console.log("Gibberish")
+  const valid = ajv.validateEvent(req.body);
+  if (valid === null) {
+    models.events.findOne({
+      event: req.body.eventName,
+    }).then((event) => {
+      if (!event) {
+        new models.events({
+          eventName: req.body.eventName,
+          //password: bcrypt.generate(req.body.password),
+          eventHostname: req.body.eventHostname,
+          eventDescription: req.body.eventDescription,
+          eventGame: req.body.eventGame,
+          eventAddress: req.body.eventAddress,
+          eventTime: req.body.eventTime, //Maybe need to format for time
+          eventMaxAttendance: req.body.eventMaxAttendance,
+          eventAttending: req.body.eventAttending,
+          //birthday: new Date(Date.parse(req.body.birthday)), //Need to format to date not string
+        }).save().then((newEvent) => {
+          req.session.eventName = req.body.eventName;
+          res.status(201).json({
+            status: 201,
+            message: 'Event created successfully',
+            event: { // Send message back w info
+              eventName: req.body.eventName,
+              eventHostname: req.body.eventHostname,
+              eventDescription: req.body.eventDescription,
+              eventGame: req.body.eventGame,
+              eventAddress: req.body.eventAddress,
+              eventTime: req.body.eventTime,
+              eventMaxAttendance: req.body.eventMaxAttendance,
+              eventAttending: req.body.eventAttending,
+              //birthday: req.body.birthday, //Need to format to date not string
+              //birthday: new Date(Date.parse(req.body.birthday)), 
+            },
+          });
+        }).catch((err) => {
+          console.error(err);
+          res.status(500).json({
+            status: 500,
+            message: 'An unknown error occured, we will investigate it as soon as possible',
+          });
+        });
+      } else {
+        res.status(403).json({
+          status: 403,
+          message: `An event with the name of: ${req.body.eventName} already exsists`,
+        });
+      }
+    });
+  } else {
+    res.status(403).send({ status: 403, message: 'Invalid request body', reason: valid });
+  }
 });
 
 router.get('/whoami', (req, res) => {

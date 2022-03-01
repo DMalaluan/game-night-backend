@@ -100,31 +100,38 @@ const userSchema = { // need to edit
   additionalProperties: false,
 };
 
-// const eventsSchema = { // need to format for eventSchema
-//   type: 'object',
-//   properties: {
-//     eventName: {
-//       type: 'string',
-//     },
-//     eventHostname: {
-//       type: 'string',
-//     },
-//     eventDescription: {
-//       type: 'string',
-//     },
-//     eventGame: {
-//       type: 'string',
-//     },
-//     eventTime: { 
-//       type: 'date',
-//     },
-//     favGame: {
-//       type: 'string',
-//     },
-//   },
-//   required: [],
-//   additionalProperties: false,
-// };
+const eventSchema = { // need to format for eventSchema
+  type: 'object',
+  properties: {
+    eventName: {
+      type: 'string',
+    },
+    eventHostname: {
+      type: 'string',
+    },
+    eventDescription: {
+      type: 'string',
+    },
+    eventGame: {
+      type: 'string',
+    },
+    eventTime: { 
+      type: 'string',
+      //type: 'date',
+    },
+    eventAddress: {
+      type: 'string',
+    },
+    eventMaxAttendance: {
+      type: 'string',
+    },
+    eventAttending: {
+      type: 'string',
+    },
+  },
+  required: [],
+  additionalProperties: false,
+};
 
 
 module.exports = { // validation for each shema
@@ -155,6 +162,14 @@ module.exports = { // validation for each shema
   validateUser(data) {
     if (data !== null && data !== undefined) {
       const validate = ajv.compile(userSchema);
+      validate(data);
+      return (validate.errors);
+    }
+    return ('No data received.');
+  },
+  validateEvent(data) {
+    if (data !== null && data !== undefined) {
+      const validate = ajv.compile(eventSchema);
       validate(data);
       return (validate.errors);
     }

@@ -10,19 +10,19 @@ const usersSchema = mongoose.Schema({
   email: String,
   favGame: String,
 });
-/*
-const eventsSchema = mongoose.Schema({
+
+const eventSchema = mongoose.Schema({
   eventName: String, 
   eventHostname: String,
   eventDescription: String, //Might remove depending on event popup
   eventGame: String,
   eventAddress: String, //Maybe have to format address data
-  eventTime: Date, //Event date and time formatted together
+  eventTime: String, //Event date and time formatted together
   eventMaxAttendance: Number,
-  eventAttendance: Number,
-});*/
+  eventAttending: Number,
+});
 
 module.exports = {
   users: mongoose.model('users', usersSchema),
-  //events: mongoose.model('events', eventsSchema),
+  events: mongoose.model('events', eventSchema),
 };

@@ -68,4 +68,18 @@ router.delete('/user/:id', auth, (req, res) => {
     res.sendStatus(204);
   });
 });
+
+router.get('/events', auth, (req, res) => {
+  models.events.find(generateQueryString(req.query), { _id: 0 }).then((events) => {
+    if (users) {
+      res.status(200).json({
+        status: 201,
+        message: 'Events found',
+        users,
+      });
+    } else {
+      res.status(404).json({ status: 404, message: 'Events not found' });
+    }
+  });
+});
 module.exports = router;
