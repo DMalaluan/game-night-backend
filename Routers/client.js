@@ -87,7 +87,6 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/createEvent', (req, res) => {
-  //console.log("Gibberish")
   const valid = ajv.validateEvent(req.body);
   if (valid === null) {
     models.events.findOne({
@@ -96,15 +95,13 @@ router.post('/createEvent', (req, res) => {
       if (!event) {
         new models.events({
           eventName: req.body.eventName,
-          //password: bcrypt.generate(req.body.password),
           eventHostname: req.body.eventHostname,
           eventDescription: req.body.eventDescription,
           eventGame: req.body.eventGame,
           eventAddress: req.body.eventAddress,
-          eventTime: req.body.eventTime, //Maybe need to format for time
+          eventTime: req.body.eventTime, 
           eventMaxAttendance: req.body.eventMaxAttendance,
           eventAttending: req.body.eventAttending,
-          //birthday: new Date(Date.parse(req.body.birthday)), //Need to format to date not string
         }).save().then((newEvent) => {
           req.session.eventName = req.body.eventName;
           res.status(201).json({
@@ -119,8 +116,6 @@ router.post('/createEvent', (req, res) => {
               eventTime: req.body.eventTime,
               eventMaxAttendance: req.body.eventMaxAttendance,
               eventAttending: req.body.eventAttending,
-              //birthday: req.body.birthday, //Need to format to date not string
-              //birthday: new Date(Date.parse(req.body.birthday)), 
             },
           });
         }).catch((err) => {
