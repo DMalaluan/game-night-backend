@@ -32,22 +32,24 @@ router.get('/users', auth, (req, res) => {
     }
   });
 });
+//Failed attempt, please try to fix Postman returned: "Cannot PATCH"
+//Below attempted to edit username on database. 
 router.patch('/user/:id', auth, (req, res) => {
   const valid = ajv.validateUser(req.body);
   if (valid === null) {
-    models.users.findOneAndUpdate({ id: req.params.id }, req.body, { new: true }, (err, updatedUser) => {
+    models.users.findByIdAndUpdate(req.params.id , req.body, { new: true }, (err, updatedUser) => {
       if (err) {
         console.error(err);
         res.status(500).json({
           status: 500,
-          message: 'An unknown error occured, we will investigate it as soon as possible',
+          message: 'Account was not updated, please try again',
         });
         return;
       }
       res.status(200).json({
         status: 200,
         message: `User ${req.params.id} updated successfully`,
-        board: updatedUser,
+        users: updatedUser,
       });
     });
   } else {
@@ -55,13 +57,14 @@ router.patch('/user/:id', auth, (req, res) => {
   }
 });
 
+//Deletes the first user in the database. FIX: Delete specified user.
 router.delete('/user/:id', auth, (req, res) => {
-  models.users.findOneAndDelete(req.params.id, (err) => {
+  models.users.findByIdAndDelete(req.params.id, (err) => {
     if (err) {
       console.error(err);
       res.status(500).json({
         status: 500,
-        message: 'An unknown error occured, we will investigate it as soon as possible',
+        message: 'Account was either not found or not deleted, please try again',
       });
       return;
     }

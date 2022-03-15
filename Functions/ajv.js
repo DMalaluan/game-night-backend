@@ -90,7 +90,7 @@ const userSchema = { // need to edit
       type: 'string',
     },
     birthday: { // check if this is right. //Need to format to date not string
-      type: 'date',
+      type: 'string',
     },
     favGame: {
       type: 'string',
