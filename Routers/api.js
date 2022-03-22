@@ -32,8 +32,7 @@ router.get('/users', auth, (req, res) => {
     }
   });
 });
-//Failed attempt, please try to fix Postman returned: "Cannot PATCH"
-//Below attempted to edit username on database. 
+
 router.patch('/user/:id', auth, (req, res) => {
   const valid = ajv.validateUser(req.body);
   if (valid === null) {
@@ -57,7 +56,6 @@ router.patch('/user/:id', auth, (req, res) => {
   }
 });
 
-//Deletes the first user in the database. FIX: Delete specified user.
 router.delete('/user/:id', auth, (req, res) => {
   models.users.findByIdAndDelete(req.params.id, (err) => {
     if (err) {
