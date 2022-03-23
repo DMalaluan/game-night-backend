@@ -115,19 +115,19 @@ const eventSchema = { // need to format for eventSchema
     eventGame: {
       type: 'string',
     },
-    eventTime: { 
+   /* eventTime: { 
       type: 'string',
       //type: 'date',
-    },
+    },*/
     eventAddress: {
       type: 'string',
     },
-    eventMaxAttendance: {
+   /* eventMaxAttendance: {
       type: 'string',
     },
     eventAttending: {
       type: 'string',
-    },
+    },*/
   },
   required: [],
   additionalProperties: false,

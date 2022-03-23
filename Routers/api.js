@@ -5,6 +5,22 @@ const {
   ajv, auth, generateQueryString, models,
 } = require('../Functions');
 
+//Get specific user by username
+router.get('/user/:username', auth, (req, res) => {
+  models.users.findOne({ username: req.params.username }, { _id: 0 }).then((user) => {
+    if (user) {
+      res.status(200).json({
+        status: 201,
+        message: `User: ${user.username} found`,
+        user,
+      });
+    } else {
+      res.status(404).json({ status: 404, message: 'User not found' });
+    }
+  });
+});
+
+//Get specific user by User ID
 router.get('/user/:id', auth, (req, res) => {
   models.users.findOne({ id: req.params.id }, { _id: 0 }).then((user) => {
     if (user) {
@@ -83,4 +99,20 @@ router.get('/events', auth, (req, res) => {
     }
   });
 });
+
+//Get specific event
+router.get('/events/:eventName', auth, (req, res) => {
+  models.events.findOne({ eventName: req.params.eventName }, { _id: 0 }).then((event) => {
+    if (event) {
+      res.status(200).json({
+        status: 201,
+        message: `Event: ${event.eventName} found`,
+        event,
+      });
+    } else {
+      res.status(404).json({ status: 404, message: 'Event not found' });
+    }
+  });
+});
+
 module.exports = router;

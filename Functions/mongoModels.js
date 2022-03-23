@@ -17,9 +17,9 @@ const eventSchema = mongoose.Schema({
   eventDescription: String, //Might remove depending on event popup
   eventGame: String,
   eventAddress: String, //Maybe have to format address data
-  eventTime: String, //Event date and time formatted together
-  eventMaxAttendance: Number,
-  eventAttending: Number,
+  //eventTime: String, //Event date and time formatted together
+  //eventMaxAttendance: Number,
+  //eventAttending: Number,
 });
 
 module.exports = {

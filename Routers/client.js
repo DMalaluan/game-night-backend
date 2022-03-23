@@ -99,9 +99,9 @@ router.post('/createEvent', (req, res) => {
           eventDescription: req.body.eventDescription,
           eventGame: req.body.eventGame,
           eventAddress: req.body.eventAddress,
-          eventTime: req.body.eventTime, 
-          eventMaxAttendance: req.body.eventMaxAttendance,
-          eventAttending: req.body.eventAttending,
+          //eventTime: req.body.eventTime, 
+          //eventMaxAttendance: req.body.eventMaxAttendance,
+          //eventAttending: req.body.eventAttending,
         }).save().then((newEvent) => {
           req.session.eventName = req.body.eventName;
           res.status(201).json({
@@ -113,9 +113,9 @@ router.post('/createEvent', (req, res) => {
               eventDescription: req.body.eventDescription,
               eventGame: req.body.eventGame,
               eventAddress: req.body.eventAddress,
-              eventTime: req.body.eventTime,
-              eventMaxAttendance: req.body.eventMaxAttendance,
-              eventAttending: req.body.eventAttending,
+              //eventTime: req.body.eventTime,
+              //eventMaxAttendance: req.body.eventMaxAttendance,
+              //eventAttending: req.body.eventAttending,
             },
           });
         }).catch((err) => {
