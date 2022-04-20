@@ -139,11 +139,7 @@ router.get('/whoami', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  if (req.session && req.session.user && req.session.user.username !== null && req.session.user.username !== undefined) {
-    res.send(`Logged in as: ${req.session.user.username}`);
-  } else {
-    res.send('Currently not logged in');
-  }
+    res.send(req.session.user || req.session);
 });
 
 //currentUser
