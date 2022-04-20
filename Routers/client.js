@@ -148,7 +148,7 @@ router.get('/', (req, res) => {
 
 //currentUser
 router.get('/curUser', (req, res) => {
-  if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
+  if (req.session && req.session.user && req.session.user.username !== null && req.session.user.username !== undefined) {
     models.users.findOne({ username: req.session.user.username }, { _id: 0 }).then((user) => {
       if (user) {
         res.status(200).json({
