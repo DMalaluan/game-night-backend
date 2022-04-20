@@ -64,6 +64,7 @@ router.post('/login', (req, res) => {
     }, {
       _id: 0,
     }, async (err, user) => {
+      console.log(user);
       if (user) {
         if (bcrypt.compare(req.body.password.value, user.password)) {
           req.session.user = {
@@ -140,6 +141,7 @@ router.get('/whoami', (req, res) => {
 
 router.get('/', (req, res) => {
     res.send(req.session.user || req.session);
+    //console.log(req.session.user);
 });
 
 //currentUser
