@@ -85,6 +85,7 @@ router.post('/login', (req, res) => {
 
 router.post('/createEvent', (req, res) => {
   const valid = ajv.validateEvent(req.body);
+  console.log(req.body);
   if (valid === null) {
     models.events.findOne({
       event: req.body.eventName,
@@ -96,23 +97,18 @@ router.post('/createEvent', (req, res) => {
           eventDescription: req.body.eventDescription,
           eventGame: req.body.eventGame,
           eventAddress: req.body.eventAddress,
-          //eventTime: req.body.eventTime, 
-          //eventMaxAttendance: req.body.eventMaxAttendance,
-          //eventAttending: req.body.eventAttending,
         }).save().then((newEvent) => {
           req.session.eventName = req.body.eventName;
           res.status(201).json({
             status: 201,
             message: 'Event created successfully',
             event: { // Send message back w info
+              id: newEvent.id,
               eventName: req.body.eventName,
               eventHostname: req.body.eventHostname,
               eventDescription: req.body.eventDescription,
               eventGame: req.body.eventGame,
               eventAddress: req.body.eventAddress,
-              //eventTime: req.body.eventTime,
-              //eventMaxAttendance: req.body.eventMaxAttendance,
-              //eventAttending: req.body.eventAttending,
             },
           });
         }).catch((err) => {
@@ -147,6 +143,25 @@ router.get('/', (req, res) => {
     res.send(`Logged in as: ${req.session.user.username}`);
   } else {
     res.send('Currently not logged in');
+  }
+});
+
+//currentUser
+router.get('/curUser', (req, res) => {
+  if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
+    models.users.findOne({ username: req.session.user.username }, { _id: 0 }).then((user) => {
+      if (user) {
+        res.status(200).json({
+          status: 201,
+          message: `User: ${user.username} found`,
+          user,
+        });
+      } else {
+        res.status(404).json({ status: 404, message: 'User not found' });
+      }
+    });
+  } else {
+    res.status(404).json({ status: 401, message: 'Not Signed In' });
   }
 });
 
