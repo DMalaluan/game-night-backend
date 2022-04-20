@@ -61,7 +61,15 @@ const loginSchema = {
       type: 'string',
     },
     password: {
-      type: 'string',
+      type: 'object',
+      properties: {
+        value: {
+          type: 'string'
+        },
+        error: {
+          type: 'string'
+        }
+      }
     },
     secret: { // require below if needed for MFA
       type: 'string',

@@ -4,7 +4,6 @@ const { v4: uuid } = require('uuid');
 const { ajv, bcrypt, models } = require('../Functions');
 
 router.post('/signup', (req, res) => {
-  //console.log("Gibberish")
   const valid = ajv.validateSignup(req.body);
   if (valid === null) {
     models.users.findOne({
@@ -66,7 +65,7 @@ router.post('/login', (req, res) => {
       _id: 0,
     }, async (err, user) => {
       if (user) {
-        if (bcrypt.compare(req.body.password, user.password)) {
+        if (bcrypt.compare(req.body.password.value, user.password)) {
           req.session.user = {
             id: user.id,
             username: user.username,
