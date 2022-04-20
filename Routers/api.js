@@ -20,7 +20,7 @@ router.get('/user/:username', auth, (req, res) => {
   });
 });
 
-//Get specific user by User ID
+//Get specific user by User ID //DOES NOT WORK
 router.get('/user/:id', auth, (req, res) => {
   models.users.findOne({ id: req.params.id }, { _id: 0 }).then((user) => {
     if (user) {
@@ -49,6 +49,8 @@ router.get('/users', auth, (req, res) => {
   });
 });
 
+
+//Update User by User ID
 router.patch('/user/:id', auth, (req, res) => {
   const valid = ajv.validateUser(req.body);
   if (valid === null) {
@@ -72,6 +74,32 @@ router.patch('/user/:id', auth, (req, res) => {
   }
 });
 
+//Update User by username rather than ID //DOES NOT WORK//UPDATES FIRST ENTRY IN DB ONLY
+//API to update current user information
+router.patch('/user/:username', auth, (req, res) => {
+  const valid = ajv.validateUser(req.body);
+  if (valid === null) {
+    models.users.findOneAndUpdate(req.params.username, req.body, { new: true }, (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({
+          status: 500,
+          message: 'Account was not updated, please try again',
+        });
+        return;
+      }
+      res.status(200).json({
+        status: 200,
+        message: `User ${req.params.username} updated successfully`,
+        users: updatedUser,
+      });
+    });
+  } else {
+    res.status(403).send(valid);
+  }
+});
+
+//API to delete USER account. 
 router.delete('/user/:id', auth, (req, res) => {
   models.users.findByIdAndDelete(req.params.id, (err) => {
     if (err) {
@@ -85,6 +113,21 @@ router.delete('/user/:id', auth, (req, res) => {
     res.sendStatus(204);
   });
 });
+
+// API to delete current user session >> therefore logging out user from session and stopping them from accessing unprotected endpoints. 
+router.delete('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy(err => {
+      if (err) {
+        res.status(400).send('Unable to log out')
+      } else {
+        res.send('Logout successful')
+      }
+    });
+  } else {
+    res.end()
+  }
+})
 
 router.get('/events', auth, (req, res) => {
   models.events.find(generateQueryString(req.query), { _id: 0 }).then((events) => {

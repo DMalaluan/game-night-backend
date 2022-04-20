@@ -55,8 +55,8 @@ router.post('/signup', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  //console.log(req.session.user);
   const valid = ajv.validateLogin(req.body);
+  console.log(req.body);
   if (req.session.user !== undefined) {
     res.redirect(301, (req.query.redirectTo || '/'));
   } else if (valid === null) {
@@ -71,7 +71,6 @@ router.post('/login', (req, res) => {
             id: user.id,
             username: user.username,
           };
-          //console.log("log")
           res.redirect(301, (req.query.redirectTo || '/'));
         } else {
           res.status(400).send('Incorrect username or password.');
@@ -83,7 +82,6 @@ router.post('/login', (req, res) => {
   } else {
     res.status(403).send({ status: 403, message: 'Invalid request body', reason: valid });
   }
-  //console.log('tempLogNumber1');
 });
 
 router.post('/createEvent', (req, res) => {
@@ -146,7 +144,6 @@ router.get('/whoami', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  //console.log(req.session)
   if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
     res.send(`Logged in as: ${req.session.user.username}`);
   } else {
