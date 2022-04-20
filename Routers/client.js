@@ -55,7 +55,7 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
   const valid = ajv.validateLogin(req.body);
-  console.log(req.body);
+  console.log(req.session);
   if (req.session.user !== undefined) {
     res.redirect(301, (req.query.redirectTo || '/'));
   } else if (valid === null) {
