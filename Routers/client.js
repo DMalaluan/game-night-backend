@@ -131,7 +131,7 @@ router.post('/createEvent', (req, res) => {
 });
 
 router.get('/whoami', (req, res) => {
-  if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
+  if (req.session && req.session.user && req.session.user.username !== null && req.session.user.username !== undefined) {
     res.send(`Logged in as: ${req.session.user.username}`);
   } else {
     res.send('Currently not logged in');
@@ -139,7 +139,7 @@ router.get('/whoami', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-  if (req.session && req.session.user.username !== null && req.session.user.username !== undefined) {
+  if (req.session && req.session.user && req.session.user.username !== null && req.session.user.username !== undefined) {
     res.send(`Logged in as: ${req.session.user.username}`);
   } else {
     res.send('Currently not logged in');
