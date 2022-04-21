@@ -57,7 +57,7 @@ router.post('/login', (req, res) => {
   const valid = ajv.validateLogin(req.body);
   console.log(req.session);
   if (req.session.user !== undefined) {
-    //res.redirect(301, (req.query.redirectTo || '/'));
+    res.redirect(301, (req.query.redirectTo || '/'));
   } else if (valid === null) {
     models.users.findOne({
       username: req.body.username,
@@ -66,12 +66,12 @@ router.post('/login', (req, res) => {
     }, async (err, user) => {
       console.log(user);
       if (user) {
-        if (bcrypt.compare(req.body.password.value, user.password)) {
+        if (bcrypt.compare(req.body.password, user.password)) {
           req.session.user = {
             id: user.id,
             username: user.username,
           };
-          //res.redirect(301, (req.query.redirectTo || '/'));
+          res.redirect(301, (req.query.redirectTo || '/'));
         } else {
           res.status(400).send('Incorrect username or password.');
         }
