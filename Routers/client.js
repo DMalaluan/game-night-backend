@@ -53,9 +53,11 @@ router.post('/signup', (req, res) => {
   }
 });
 
+//Login route NOT using sessions
 router.post('/login', (req, res) => {
   const valid = ajv.validateLogin(req.body);
-  console.log(req.session);
+  //console.log(req.session);
+  //console.log(req.body);
   if (req.session.user !== undefined) {
     res.redirect(301, (req.query.redirectTo || '/'));
   } else if (valid === null) {
@@ -67,6 +69,9 @@ router.post('/login', (req, res) => {
       console.log(user);
       if (user) {
         if (bcrypt.compare(req.body.password, user.password)) {
+          // //Attempting to attach body username to user info without sessions. 
+          // user.username = req.body.username
+          // user.id = req.body.username.id
           req.session.user = {
             id: user.id,
             username: user.username,
@@ -83,6 +88,38 @@ router.post('/login', (req, res) => {
     res.status(403).send({ status: 403, message: 'Invalid request body', reason: valid });
   }
 });
+
+//login route using Sessions
+// router.post('/login', (req, res) => {
+//   const valid = ajv.validateLogin(req.body);
+//   console.log(req.session);
+//   if (req.session.user !== undefined) {
+//     res.redirect(301, (req.query.redirectTo || '/'));
+//   } else if (valid === null) {
+//     models.users.findOne({
+//       username: req.body.username,
+//     }, {
+//       _id: 0,
+//     }, async (err, user) => {
+//       console.log(user);
+//       if (user) {
+//         if (bcrypt.compare(req.body.password, user.password)) {
+//           req.session.user = {
+//             id: user.id,
+//             username: user.username,
+//           };
+//           res.redirect(301, (req.query.redirectTo || '/'));
+//         } else {
+//           res.status(400).send('Incorrect username or password.');
+//         }
+//       } else {
+//         res.status(400).send('Incorrect username or password.');
+//       }
+//     });
+//   } else {
+//     res.status(403).send({ status: 403, message: 'Invalid request body', reason: valid });
+//   }
+// });
 
 router.post('/createEvent', (req, res) => {
   const valid = ajv.validateEvent(req.body);
@@ -140,8 +177,11 @@ router.get('/whoami', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    res.send(req.session.user || req.session);
-    //console.log(req.session.user);
+    //console.log(user);
+    // res.send(user);
+    res.send(req.session.user);
+    //res.send(req.session.user || req.session); //Original Line
+    //console.log(req.session.user); 
 });
 
 //currentUser
